@@ -1,0 +1,28 @@
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% load bootstrap_icons %}
+
+<div class="post media">
+    <h3>{{post.message_html|safe}}</h3>
+    <div class="media-body">
+        <h5 class="media-heading">
+            <span class="usename">
+                <a href='{% url "posts:for_user" username=post.user.username %}'>@{{post.user.username}}</a>
+            </span>
+            <time class="time" datetime="">
+                <a href='{% url "posts:detail" username=post.user.username pk=post.pk %}'>{{post.created_at}}</a>
+            </time>
+        </h5>
+        <div class="media-footer">
+            {% if user.is_authenticated and post.user == user%}
+            <a class="btn btn-simple" href='{% url "posts:delete" pk=post.pk%}' title="delete">
+                <span class="glyphicon glyphicon-remove text-danger" aria-hidden="true">
+                    {% bs_icon 'node-minus'%}
+                </span>
+                <span class='text-danger icon-label'>Delete</span>
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
